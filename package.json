@@ -1,0 +1,21 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "MERN Stack Project",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "Ecommerce",
+    "MERN"
+  ],
+  "author": "Bhim Prakash Oli",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^4.1.0"
+  }
+}
