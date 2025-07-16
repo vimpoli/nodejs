@@ -1,0 +1,30 @@
+[
+    {
+        "brand": "Baskins & Robbins",
+        "category": "Desserts",
+        "id": "67eab3203e295f97caf8ae4e",
+        "name": "Strawberry Icecream",
+        "price": 500
+    },
+    {
+        "brand": "Apple",
+        "category": "Smartphones",
+        "id": "67ed5844d65d5aa5646c4753",
+        "name": "Iphone 14",
+        "price": 128998
+    },
+    {
+        "brand": "Samsung",
+        "category": "Smartphones",
+        "id": "67ed5883d65d5aa5646c4761",
+        "name": "Samsung Galaxy s24",
+        "price": 185000
+    },
+    {
+        "brand": "Dell",
+        "category": "Monitors",
+        "id": "680ba1f0ebf73fbfc7753114",
+        "name": "Dell 24 Inch Monitor with IPS display 144 Hz",
+        "price": 30000
+    }
+]
