@@ -26,5 +26,39 @@
         "id": "680ba1f0ebf73fbfc7753114",
         "name": "Dell 24 Inch Monitor with IPS display 144 Hz",
         "price": 30000
+    },
+    {
+        "brand": "Gucchi",
+        "category": "Electronics",
+        "id": "683d51a39a7d6ec9520243d8",
+        "name": "Laughing Buddha",
+        "price": 1500
+    },
+    {
+        "brand": "743",
+        "category": "Eligendi id rerum ad",
+        "id": "683db1476bb97a3e1995b2fe",
+        "name": "Sawyer Sears",
+        "price": 2272
+    },
+    {
+        "brand": "Logitech",
+        "category": "Headphone",
+        "id": "683db6d957238a1a8cf0f58f",
+        "name": "Logitech G Pro X Wired 7.1 Gaming Headset",
+        "price": 15000
+    },
+    {
+        "brand": "Samsung",
+        "category": "Headphone",
+        "id": "6850264bc7470f22d4a296cc",
+        "name": "Samsung Galaxy Buds3 Pro",
+        "price": 30000
+    },
+    {
+        "brand": "Fantech",
+        "category": "Electronics",
+        "name": "Gaming Mouse",
+        "price": 2000
     }
 ]

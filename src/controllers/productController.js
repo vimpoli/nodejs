@@ -1,23 +1,31 @@
 import productService from "../services/productService.js";
+
 const getProducts = (req, res) => {
-    const products = productService.getProducts();
+    // Request query 
+    const products = productService.getProducts(req.query);
+
     res.json(products);
 }
 
-const getSingleProduct = (req, res) => {
-    res.send("One product");
+const getProductById = (req, res) => {
+    // Request params 
+    const id = req.params.id;
+    const product = productService.getProductById(id);
+
+    res.json(product);
 }
 
 const createProduct = (req, res) => {
-    res.send("Create a product");
+    productService.createProduct(req.body);
+    res.send("Product created successfully");
 }
 
-const updateProduct= (req, res) => {
+const updateProduct = (req, res) => {
     res.send("Update a product");
 }
 
-const deleteProduct= (req, res) => {
+const deleteProduct = (req, res) => {
     res.send("Delete a product");
 }
 
-export default { getProducts, getSingleProduct, createProduct, updateProduct, deleteProduct };
+export default { getProducts, getProductById, createProduct, updateProduct, deleteProduct };
