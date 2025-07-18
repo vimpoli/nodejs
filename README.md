@@ -72,5 +72,57 @@ root/
 - params
 - query
 - body
+- file
 
 ## Logging
+
+## MongoDB
+- Non-Relational Database
+- Data are stored in collections & documents
+- Collection: Table
+- Document: Rows
+- Field: columns
+
+### MongoDB Tools
+1. Shell - Terminal
+2. Compass - Local GUI
+3. Atlas - Cloud
+
+### MongoDB Shell Commands
+1. mongosh: init mongodb 
+2. show dbs: Show database list 
+3. use: Use a database
+4. cls: Clear screen
+5. show collections: Show list of collections (table)
+
+**Create**
+1. insertOne
+- db.<collectionName>.insertOne()
+- for e.g: db.products.insertOne({name: "Iphone 14", price: 100000})
+
+2. inertMany
+- db.<collectionName>.inertMany()
+- for e.g: db.products.insertMany([])
+
+**Read**
+1. find
+- db.<collectionName>.find()
+- for e.g: db.products.find({category: "Monitors"})
+
+2. findOne
+- db.<collectionName>.findOne()
+- for e.g: db.products.findOne({name: "Iphone 14"})
+
+3. countDocuments
+- db.<collectionName>.countDocuments()
+- for e.g: db.products.countDocuments()
+
+**Update**
+1. updateOne
+- db.<collectionName>.updateOne({find}, {$set: {update value}})
+- for e.g: db.products.updateOne({name: "Iphone 14"}, {$set: {name: "Iphone 14 Promax"}})
+
+**Delete**
+1. deleteOne
+- db.<collectionName>.deleteOne({find})
+- for e.g: db.products.deleteOne({name: "Iphone 14 Pro max"})
