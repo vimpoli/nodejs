@@ -1,31 +1,53 @@
 import productService from "../services/productService.js";
 
-const getProducts = (req, res) => {
-    // Request query 
-    const products = productService.getProducts(req.query);
-
-    res.json(products);
+const getProducts = async (req, res) => {
+    try {
+        const products = await productService.getProducts(req.query);
+        res.json(products);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
 }
 
-const getProductById = (req, res) => {
-    // Request params 
+const getProductById = async (req, res) => {
     const id = req.params.id;
-    const product = productService.getProductById(id);
 
-    res.json(product);
+    try {
+        const product = await productService.getProductById(id);
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
 }
 
-const createProduct = (req, res) => {
-    productService.createProduct(req.body);
-    res.send("Product created successfully");
+const createProduct = async (req, res) => {
+    try {
+        const data = await productService.createProduct(req.body);
+        res.status(201).json(data);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+};
+
+const updateProduct = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const updatedProduct = await productService.updateProduct(id, req.body);
+        res.status(201).json(updatedProduct);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
 }
 
-const updateProduct = (req, res) => {
-    res.send("Update a product");
-}
+const deleteProduct = async (req, res) => {
+    const id = req.params.id;
 
-const deleteProduct = (req, res) => {
-    res.send("Delete a product");
+    try {
+        await productService.deleteProduct(id);
+        res.send(`Product deleted successfully with id: ${id}`);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
 }
 
 export default { getProducts, getProductById, createProduct, updateProduct, deleteProduct };

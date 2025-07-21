@@ -3,9 +3,14 @@ import bodyParser from "body-parser";
 
 import config from "./config/config.js";
 import productRoutes from "./routes/productRoutes.js";
+import mongoose from "mongoose";
+import connectDB from "./config/db.js";
 
 // Initialize express
 const app = express();
+
+connectDB();
+
 // parse application/json 
 app.use(bodyParser.json());
 

@@ -174,3 +174,21 @@ root/
 ### Skip
 
 - db.products.find().skip(2)
+
+# Mongoose
+
+- ODM of MongoDb for Node.js
+- Schema validation
+- Models
+- Middlewares
+- Relationships
+
+## Schema
+
+- Structure/rule of a document/data
+
+## Model
+
+- Class built from schema, interact with the database
+- Semantics: Always singular, Pascal case
+- for e.g: Product
