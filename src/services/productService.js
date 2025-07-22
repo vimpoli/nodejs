@@ -1,6 +1,11 @@
 import Product from "../models/Product.js";
 
-const getProducts = async (query) => {
+const createProduct = async (data) => {
+    const createdProduct = await Product.create(data);
+    return createdProduct;
+}
+
+const getProducts = async () => {
     const products = await Product.find();
     return products;
 }
@@ -8,11 +13,6 @@ const getProducts = async (query) => {
 const getProductById = (id) => {
     const foundProduct = Product.findById(id);
     return foundProduct;
-}
-
-const createProduct = async (data) => {
-    const createdProduct = await Product.create(data);
-    return createdProduct;
 }
 
 const updateProduct = async (id, data) => {

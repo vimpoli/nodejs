@@ -2,8 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 
 import config from "./config/config.js";
-import productRoutes from "./routes/productRoutes.js";
-import mongoose from "mongoose";
+import productRoute from "./routes/productRoute.js";
+import userRoute from "./routes/userRoute.js";
 import connectDB from "./config/db.js";
 
 // Initialize express
@@ -22,7 +22,8 @@ app.get('/', (req, res) => {
     });
 });
 
-app.use("/products", productRoutes);
+app.use("/api/products", productRoute);
+app.use("/api/users", userRoute);
 
 app.listen(config.port, () => {
     console.log(`Server running at port ${config.port}...`);

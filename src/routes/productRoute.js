@@ -4,11 +4,12 @@ import productController from "../controllers/productController.js";
 
 const router = express.Router();
 
+
+router.post("/", productController.createProduct);
+
 router.get("/", productController.getProducts);
 
 router.get("/:id", productController.getProductById);
-
-router.post("/", productController.createProduct);
 
 router.put("/:id", productController.updateProduct);
 
