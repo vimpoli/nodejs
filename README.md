@@ -192,3 +192,23 @@ root/
 - Class built from schema, interact with the database
 - Semantics: Always singular, Pascal case
 - for e.g: Product
+
+## Encryption
+
+- Convering normal readable text into cipher (unreadable) text.
+- for e.g: hello => 282uncjcb82dyhdh8dh
+
+- Decryption: Converting cipher text to readable form
+
+### Types
+
+1. Symmetric: Same key is used for encryption and decryption
+
+2. Asymmetric: Different keys are used for encryption and decryption. (private and public key), RSA algorithm
+
+## Hashing
+
+- Type of encryption, this is one way encryption
+
+## Salt
+- Adding random texts in the hash value
