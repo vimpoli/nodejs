@@ -1,4 +1,5 @@
 import authService from "../services/authService.js";
+import { createJWT, verifyJWT } from "../utils/jwt.js";
 
 const login = async (req, res) => {
     const input = req.body;
@@ -17,6 +18,12 @@ const login = async (req, res) => {
         }
 
         const data = await authService.login(input);
+
+        //generate token
+        const token = createJWT(data);
+        const result = await verifyJWT(token);
+        console.log(result);
+
         res.status(201).json(data);
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message);
@@ -27,7 +34,7 @@ const register = async (req, res) => {
     const input = req.body;
     try {
 
-        if(!input) {
+        if (!input) {
             return res.status(400).send("Required fields are missing");
         }
         if (!input.password) {
