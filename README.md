@@ -218,7 +218,7 @@ root/
 
 1. Login success
 2. Token generated
-3. Store token
+3. Store token (cookie, session and local)
 4. Append this token in every requests to handle auth
 
 ## JWT - JSON Web Token
@@ -232,3 +232,37 @@ root/
 1. Header
 2. Payload
 3. Signature
+
+## Cookie
+
+- Can be stored in both server and browser
+- Size: 4KB
+- Expiry date can be set
+- Available in all tabs
+
+## Session Storage
+
+- Can be stored only in browser
+- Size: 5MB
+- Expires on tab close
+- Available in one tab
+
+## Local storage
+
+- Can be stored only in browser
+- Size: 5MB - 10MB
+- Never expires
+- Available in all tabs
+
+# Middlewares
+
+- Function that remains between request and response
+- It has accessibility of both request and response object
+- It has functionality to go to next() function call
+
+## Usage
+
+- Logging
+- Authentication and Authorization
+- Error handling
+- Modify request data

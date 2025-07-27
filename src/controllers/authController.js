@@ -19,11 +19,8 @@ const login = async (req, res) => {
 
         const data = await authService.login(input);
 
-        //generate token
-        const token = createJWT(data);
-        const result = await verifyJWT(token);
-        console.log(result);
-
+        const authToken = createJWT(data);
+        res.cookie("authToken", authToken, { maxAge: 86400 * 1000 });
         res.status(201).json(data);
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message);
@@ -49,6 +46,10 @@ const register = async (req, res) => {
             return res.status(400).send("Passwords do not match");
         }
         const data = await authService.register(input);
+
+        const authToken = createJWT(data);
+        res.cookie("authToken", authToken, { maxAge: 86400 * 1000 });
+
         res.status(201).json(data);
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message);
