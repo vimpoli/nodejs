@@ -8,6 +8,8 @@ import userRoutes from "./routes/userRoute.js";
 import connectDB from "./config/db.js";
 import logger from "./middlewares/logger.js";
 import auth from "./middlewares/auth.js";
+import roleBasedAuth from "./middlewares/roleBasedAuth.js";
+import { ADMIN } from "./constants/roles.js";
 
 const app = express();
 connectDB();
@@ -24,7 +26,7 @@ app.get('/', (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/users", auth, userRoutes);
+app.use("/api/users", auth, roleBasedAuth(ADMIN), userRoutes);
 
 app.listen(config.port, () => {
     console.log(`Server running at port ${config.port}...`);

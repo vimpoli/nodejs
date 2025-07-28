@@ -10,7 +10,6 @@ const auth = async (req, res, next) => {
     try {
         const data = await verifyJWT(authToken);
         req.user = data;
-        
         next();
     } catch (error) {
         res.status(401).send("Invalid token");

@@ -14,16 +14,32 @@ const getProducts = async () => {
 }
 
 const getProductById = (id) => {
-    const foundProduct = Product.findById(id);
-    return foundProduct;
+    const product = Product.findById(id);
+
+    if (!product) {
+        throw {
+            statusCode: 404,
+            message: "Product Not Found"
+        };
+    }
+    return product;
 }
 
-const updateProduct = async (id, data) => {
+const updateProduct = async (id, data, userId) => {
+    const product = await getProductById(id);
+
+    if (product.createdBy != userId) throw { statusCode: 403, message: "Access denied" };
+
     const updatedProduct = await Product.findByIdAndUpdate(id, data, { new: true });
+
     return updatedProduct;
 }
 
-const deleteProduct = async (id) => {
+const deleteProduct = async (id, userId) => {
+    const product = await getProductById(id);
+
+    if (product.createdBy != userId) throw { statusCode: 403, message: "Access denied" };
+
     await Product.findByIdAndDelete(id);
 }
 

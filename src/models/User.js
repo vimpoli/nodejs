@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ADMIN, MERCHANT, USER } from "../constants/roles.js";
 
 const userSchema = mongoose.Schema({
     name: {
@@ -26,8 +27,8 @@ const userSchema = mongoose.Schema({
     },
     roles: {
         type: [String],
-        default: ["USER"],
-        enum: ["USER", "ADMIN", "MERCHANT"],
+        default: [USER],
+        enum: [USER, ADMIN, MERCHANT],
     },
     address: {
         city: {
@@ -53,11 +54,11 @@ const userSchema = mongoose.Schema({
     },
     profileImageUrl: {
         type: String,
-        createdAt: {
-            type: Date,
-            default: Date.now(),
-            immutable: true,
-        },
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+        immutable: true,
     },
 });
 

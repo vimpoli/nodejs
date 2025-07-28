@@ -266,3 +266,7 @@ root/
 - Authentication and Authorization
 - Error handling
 - Modify request data
+
+# RBAC - Role Based Access Control
+- Single role: Access hierarchy
+- Multiple roles:
