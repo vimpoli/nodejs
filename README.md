@@ -193,6 +193,16 @@ root/
 - Semantics: Always singular, Pascal case
 - for e.g: Product
 
+### Product Order
+1. User id
+2. Product Items
+  a. product id
+  b. quantity
+3. Status
+4. Order number
+5. Total price
+6. Shipping address
+
 ## Encryption
 
 - Convering normal readable text into cipher (unreadable) text.

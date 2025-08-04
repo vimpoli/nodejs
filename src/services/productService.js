@@ -8,8 +8,27 @@ const createProduct = async (data, createdBy) => {
     return createdProduct;
 }
 
-const getProducts = async () => {
-    const products = await Product.find();
+const getProducts = async (query) => {
+
+    const { name, limit, offset, brands, category, min, max } = query;
+
+    const sort = JSON.parse(query.sort || "{}");
+
+    const filters = {};
+
+    if (brands) {
+        const brandItems = brands.split(",");
+        filters.brand = { $in: brandItems };
+    }
+    if (category) filters.category = category;
+    if (min) filters.price = { $gte: min };
+    if (max) filters.price = { ...filters.price, $lte: max };
+    if (name) filters.name = { $regex: name, $options: "i" };
+
+    const products = await Product.find(filters)
+        .sort(sort)
+        .limit(limit)
+        .skip(offset);
     return products;
 }
 

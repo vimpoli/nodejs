@@ -5,6 +5,7 @@ import config from "./config/config.js";
 import authRoutes from "./routes/authRoute.js";
 import productRoutes from "./routes/productRoute.js";
 import userRoutes from "./routes/userRoute.js";
+import orderRoutes from "./routes/orderRoute.js"
 import connectDB from "./config/db.js";
 import logger from "./middlewares/logger.js";
 import auth from "./middlewares/auth.js";
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/users", auth, roleBasedAuth(ADMIN), userRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.listen(config.port, () => {
     console.log(`Server running at port ${config.port}...`);
