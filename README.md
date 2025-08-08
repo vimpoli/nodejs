@@ -194,14 +194,22 @@ root/
 - for e.g: Product
 
 ### Product Order
+
 1. User id
 2. Product Items
-  a. product id
-  b. quantity
+   a. product id
+   b. quantity
 3. Status
 4. Order number
 5. Total price
 6. Shipping address
+
+### File Upload
+
+1. Data/File input : Body -> FormData -> Multer
+2. Temporary storage : /uploads -> Buffer (Binary data)
+3. Storage bucket : Upload to Cloudinary -> filePath/url
+4. set the filepath/URL : Use this filepath/url to store in database
 
 ## Encryption
 
@@ -278,5 +286,39 @@ root/
 - Modify request data
 
 # RBAC - Role Based Access Control
+
 - Single role: Access hierarchy
 - Multiple roles:
+
+# Payment
+
+1. Payment method use
+2. Update payment status in our system
+
+## Khalti
+
+1. Payment initialize -> Generate url using the input data
+2. Payment occurs in the khalti portal
+3. Redirects to your return url after completion
+
+# Semantics
+
+- Readability
+- Formatting
+- File and folder structure
+- File and folder naming
+  - For JS folders use either camelCase or kebab-case
+  - For JS files use camelCase
+  - For HTML and CSS files use kebab-case
+  - Always use noun
+- Variables: noun
+- Functions/Methods: verb
+- Check for singular/plural
+- Routes: kebab-case with lowercase texts
+- Add lines above and below if/else, loop function call
+
+# Debugging
+- Process of finding errors
+
+## Steps to debug
+1. Check the root app.js file

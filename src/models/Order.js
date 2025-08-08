@@ -1,61 +1,75 @@
 import mongoose from "mongoose";
-import { ORDER_STATUS_CONFIRMED, ORDER_STATUS_DELIVERED, ORDER_STATUS_PENDING, ORDER_STATUS_SHIPPED } from "../constants/orderStatuses.js";
+import {
+  ORDER_STATUS_CONFIRMED,
+  ORDER_STATUS_DELIVERED,
+  ORDER_STATUS_PENDING,
+  ORDER_STATUS_SHIPPED,
+} from "../constants/orderStatuses.js";
 
 const orderSchema = new mongoose.Schema({
-    ordernumber: {
-        type: String,
-        required: [true, "Order number is required"],
-    },
-    user: {
+  ordernumber: {
+    type: String,
+    required: [true, "Order number is required"],
+  },
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: [true, "User id is required"],
+  },
+  orderItems: [
+    {
+      product: {
         type: mongoose.Types.ObjectId,
-        ref: "User",
-        required: [true, "User id is required"],
-    },
-    orderItems: [
-        {
-            product: {
-                type: mongoose.Types.ObjectId,
-                ref: "Product",
-                required: [true, "Product id is required"],
-            },
-            quantity: {
-                type: Number,
-                default: 1
-            }
-        }
-    ],
-    status: {
-        type: String,
-        default: ORDER_STATUS_PENDING,
-        enum: [ORDER_STATUS_PENDING, ORDER_STATUS_CONFIRMED, ORDER_STATUS_SHIPPED, ORDER_STATUS_DELIVERED],
-    },
-    totalPrice: {
+        ref: "Product",
+        required: [true, "Product id is required"],
+      },
+      quantity: {
         type: Number,
-        required: [true, "Total price is required"]
+        default: 1,
+      },
     },
-    shippingAddress: {
-        country: {
-            type: String,
-            default: "Nepal"
-        },
-        province: {
-            type: String,
-            required: [true, "Shipping address province is required."],
-        },
-        city: {
-            type: String,
-            required: [true, "Shipping address city address is required."],
-        },
-        street: {
-            type: String,
-        },
+  ],
+  status: {
+    type: String,
+    default: ORDER_STATUS_PENDING,
+    enum: [
+      ORDER_STATUS_PENDING,
+      ORDER_STATUS_CONFIRMED,
+      ORDER_STATUS_SHIPPED,
+      ORDER_STATUS_DELIVERED,
+    ],
+  },
+  totalPrice: {
+    type: Number,
+    required: [true, "Total price is required"],
+  },
+  shippingAddress: {
+    country: {
+      type: String,
+      default: "Nepal",
     },
-    createdAt: {
-        type: Date,
-        default: Date.now(),
-        immutable: true,
+    province: {
+      type: String,
+      required: [true, "Shipping address province is required."],
     },
-})
+    city: {
+      type: String,
+      required: [true, "Shipping address city address is required."],
+    },
+    street: {
+      type: String,
+    },
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    immutable: true,
+  },
+  payment: {
+    type: mongoose.Types.ObjectId,
+    ref: "Payment",
+  },
+});
 
 const model = mongoose.model("Order", orderSchema);
 

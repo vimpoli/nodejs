@@ -7,7 +7,12 @@ import { ADMIN } from "../constants/roles.js";
 const router = express.Router();
 
 router.post("/", auth, orderController.createOrder);
-router.get("/", orderController.getOrders);
+router.get("/", auth, roleBasedAuth(ADMIN), orderController.getOrders);
+router.get("/user", auth, orderController.getOrdersbyUser);
+router.get("/:id", auth, roleBasedAuth(ADMIN), orderController.getOrderById);
+router.put("/:id", auth, roleBasedAuth(ADMIN), orderController.updateOrder);
 router.delete("/:id", auth, roleBasedAuth(ADMIN), orderController.deleteOrder);
+router.post("/:id/payment", auth, orderController.orderPayment);
+router.put("/:id/payment/confirm", auth, orderController.confirmOrderPayment);
 
 export default router;
