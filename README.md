@@ -301,6 +301,15 @@ root/
 2. Payment occurs in the khalti portal
 3. Redirects to your return url after completion
 
+# Reset Password
+
+1. User requests on forgot password
+2. Sends an email to that user, with a reset-password link and token
+3. Also store this token in the db
+4. Requests for reset password
+5. Includes new password, confirm password with token
+6. Update the password.
+
 # Semantics
 
 - Readability
@@ -318,7 +327,9 @@ root/
 - Add lines above and below if/else, loop function call
 
 # Debugging
+
 - Process of finding errors
 
 ## Steps to debug
+
 1. Check the root app.js file

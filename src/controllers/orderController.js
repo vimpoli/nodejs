@@ -65,11 +65,11 @@ const deleteOrder = async (req, res) => {
   }
 };
 
-const orderPayment = async (req, res) => {
+const orderPaymentViaKhalti = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const data = await orderService.orderPayment(id);
+    const data = await orderService.orderPaymentViaKhalti(id);
 
     res.status(201).json(data);
   } catch (error) {
@@ -96,6 +96,6 @@ export default {
   getOrderById,
   updateOrder,
   deleteOrder,
-  orderPayment,
+  orderPaymentViaKhalti,
   confirmOrderPayment,
 };

@@ -10,8 +10,6 @@ import orderRoutes from "./routes/orderRoute.js";
 import connectDB from "./config/db.js";
 import logger from "./middlewares/logger.js";
 import auth from "./middlewares/auth.js";
-import roleBasedAuth from "./middlewares/roleBasedAuth.js";
-import { ADMIN } from "./constants/roles.js";
 import connectCloudinary from "./config/cloudinary.js";
 
 const app = express();
@@ -33,7 +31,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", upload.array("images", 5), productRoutes);
-app.use("/api/users", auth, roleBasedAuth(ADMIN), userRoutes);
+app.use("/api/users", auth, upload.single("image"), userRoutes);
 app.use("/api/orders", orderRoutes);
 
 app.listen(config.port, () => {

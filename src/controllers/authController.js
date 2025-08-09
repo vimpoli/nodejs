@@ -54,4 +54,51 @@ const register = async (req, res) => {
   }
 };
 
-export default { register, login };
+const forgotPassword = async (req, res) => {
+  const input = req.body;
+  try {
+    if (!input) {
+      return res.status(400).send("Email address is required");
+    }
+
+    const data = await authService.forgotPassword(input.email);
+
+    res.json(data);
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const input = req.body;
+  const query = req.query;
+
+  try {
+    if ((!query.userId, !query.resetToken)) {
+      return res.status(400).send("User ID and reset token are required");
+    }
+    if (!input.password) {
+      return res.status(400).send("Password is required");
+    }
+
+    if (!input.confirmPassword) {
+      return res.status(400).send("Confirm password is required");
+    }
+
+    if (input.password !== input.confirmPassword) {
+      return res.status(400).send("Passwords do not match");
+    }
+
+    const data = await authService.resetPassword(
+      query.userId,
+      query.resetToken,
+      input.password
+    );
+
+    res.status(201).json(data);
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+
+export default { register, login, forgotPassword, resetPassword };

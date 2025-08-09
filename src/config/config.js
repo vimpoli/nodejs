@@ -18,6 +18,7 @@ const config = {
     apiUrl: process.env.KHALTI_API_URL || "",
     returnURL: process.env.KHALTI_RETURN_URL || "",
   },
+  emailApiKey: process.env.EMAIL_API_KEY || "",
 };
 
 export default config;
