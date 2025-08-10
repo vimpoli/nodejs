@@ -6,13 +6,13 @@ import { ADMIN } from "../constants/roles.js";
 
 const router = express.Router();
 
-router.post("/", auth, orderController.createOrder);
-router.get("/", auth, roleBasedAuth(ADMIN), orderController.getOrders);
-router.get("/user", auth, orderController.getOrdersbyUser);
-router.get("/:id", auth, roleBasedAuth(ADMIN), orderController.getOrderById);
-router.put("/:id", auth, roleBasedAuth(ADMIN), orderController.updateOrder);
-router.delete("/:id", auth, roleBasedAuth(ADMIN), orderController.deleteOrder);
-router.post("/:id/payment/khalti", auth, orderController.orderPaymentViaKhalti);
-router.put("/:id/confirm-payment", auth, orderController.confirmOrderPayment);
+router.post("/", orderController.createOrder);
+router.get("/", roleBasedAuth(ADMIN), orderController.getOrders);
+router.get("/user", orderController.getOrdersbyUser);
+router.get("/:id", roleBasedAuth(ADMIN), orderController.getOrderById);
+router.put("/:id", orderController.updateOrder);
+router.delete("/:id", orderController.deleteOrder);
+router.post("/:id/payment/khalti", orderController.orderPaymentViaKhalti);
+router.put("/:id/confirm-payment", orderController.confirmOrderPayment);
 
 export default router;

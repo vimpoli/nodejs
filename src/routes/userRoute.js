@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", roleBasedAuth(ADMIN), userController.createUser);
 router.get("/", roleBasedAuth(ADMIN), userController.getUsers);
 router.get("/:id", roleBasedAuth(ADMIN), userController.getUserById);
-router.put("/:id", roleBasedAuth(ADMIN), userController.updateUser);
+router.put("/:id", userController.updateUser);
 router.patch("/:id/profile-image", userController.updateProfilemage);
 router.delete("/:id", roleBasedAuth(ADMIN), userController.deleteUser);
 

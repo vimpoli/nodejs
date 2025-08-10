@@ -9,9 +9,9 @@ const login = async (data) => {
 
   if (!user) throw { statusCode: 404, message: "User not found" };
 
-  const isPasswordMatch = bcrypt.compareSync(data.password, user.password);
+  const isPasswordMatched = bcrypt.compareSync(data.password, user.password);
 
-  if (!isPasswordMatch)
+  if (!isPasswordMatched)
     throw { statusCode: 400, message: "Incorrect email or password" };
 
   return {

@@ -3,6 +3,7 @@ import {
   PAYMENT_STATUS_COMPLETED,
   PAYMENT_STATUS_FAILED,
 } from "../constants/paymentStatuses.js";
+import { ADMIN } from "../constants/roles.js";
 import Order from "../models/Order.js";
 import Payment from "../models/Payment.js";
 import payment from "../utils/payment.js";
@@ -46,13 +47,52 @@ const getOrdersbyUser = async (userId) => {
   return orders;
 };
 
-const updateOrder = async (id, data) =>
-  await Order.findByIdAndUpdate(id, { status: data.status }, { new: true });
-
-const deleteOrder = async (id) => await Order.findByIdAndDelete(id);
-
-const orderPaymentViaKhalti = async (id) => {
+const updateOrder = async (id, data, authUser) => {
   const order = await getOrderById(id);
+
+  try {
+    if (order.user != authUser._id && !authUser.roles.includes(ADMIN)) {
+      throw {
+        statusCode: 403,
+        message: "Access denied",
+      };
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      id,
+      { status: data.status },
+      { new: true }
+    );
+
+    return updatedOrder;
+  } catch (error) {
+    return error;
+  }
+};
+
+const deleteOrder = async (id, user) => {
+  const order = await getOrderById(id);
+
+  if (order.user != user._id && !user.roles.includes(ADMIN)) {
+    throw {
+      statusCode: 403,
+      message: "Access denied",
+    };
+  }
+
+  return await Order.findByIdAndDelete(id);
+};
+
+const orderPaymentViaKhalti = async (id, user) => {
+  const order = await getOrderById(id);
+
+  if (order.user != user._id) {
+    throw {
+      statusCode: 403,
+      message: "Access denied",
+    };
+  }
+
   const transactionId = crypto.randomUUID();
 
   const orderPayment = await Payment.create({
@@ -73,8 +113,15 @@ const orderPaymentViaKhalti = async (id) => {
   });
 };
 
-const confirmOrderPayment = async (id, status) => {
-  const order = await Order.findById(id);
+const confirmOrderPayment = async (id, status, user) => {
+  const order = await getOrderById(id);
+
+  if (order.user != user._id && !user.roles.includes(ADMIN)) {
+    throw {
+      statusCode: 403,
+      message: "Access denied",
+    };
+  }
 
   if (status.toUpperCase() !== PAYMENT_STATUS_COMPLETED) {
     await Payment.findByIdAndUpdate(order.payment._id, {

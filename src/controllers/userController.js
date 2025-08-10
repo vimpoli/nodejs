@@ -6,7 +6,7 @@ const createUser = async (req, res) => {
 
     res.status(201).json(data);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(error.statusCode || 500).send(error.message);
   }
 };
 
@@ -24,32 +24,35 @@ const getUserById = async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(error.statusCode || 500).send(error.message);
   }
 };
 
 const updateUser = async (req, res) => {
   const id = req.params.id;
+  const input = req.body;
+  const user = req.user;
 
   try {
-    const updatedUser = await userService.updateUser(id, req.body);
+    const updatedUser = await userService.updateUser(id, input, user);
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(error.statusCode || 500).send(error.message);
   }
 };
 
 const updateProfilemage = async (req, res) => {
   const id = req.params.id;
   const file = req.file;
+  const user = req.user;
 
   try {
-    const updatedUser = await userService.updateProfilemage(id, file);
+    const updatedUser = await userService.updateProfilemage(id, file, user);
 
     res.json(updatedUser);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(error.statusCode || 500).send(error.message);
   }
 };
 
@@ -61,7 +64,7 @@ const deleteUser = async (req, res) => {
 
     res.status(200).json(`User deleted successfully with id: ${id}`);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(error.statusCode || 500).send(error.message);
   }
 };
 

@@ -1,5 +1,6 @@
 import Product from "../models/Product.js";
 import uploadFile from "../utils/file.js";
+import { ADMIN } from "../constants/roles.js";
 
 const createProduct = async (data, files, createdBy) => {
   const uploadedFiles = await uploadFile(files);
@@ -47,30 +48,38 @@ const getProductById = (id) => {
   return product;
 };
 
-const updateProduct = async (id, data, files, userId) => {
+const updateProduct = async (id, data, files, user) => {
   const product = await getProductById(id);
 
-  if (product.createdBy != userId)
-    throw { statusCode: 403, message: "Access denied" };
-
-  const updatedData = data;
-
-  if (files.length > 0) {
-    const uploadedFiles = await uploadFile(files);
-    updatedData.imageUrls = uploadedFiles.map((item) => item?.url);
+  if (product.createdBy != user._id && !user.roles.includes(ADMIN)) {
+    throw {
+      statusCode: 403,
+      message: "Access denied",
+    };
   }
-  const updatedProduct = await Product.findByIdAndUpdate(id, updatedData, {
+
+  const dataToUpdate = data;
+
+  if (files.length < 0) {
+    const uploadedFiles = await uploadFile(files);
+    dataToUpdate.imageUrls = uploadedFiles.map((item) => item?.url);
+  }
+  const updatedProduct = await Product.findByIdAndUpdate(id, dataToUpdate, {
     new: true,
   });
 
   return updatedProduct;
 };
 
-const deleteProduct = async (id, userId) => {
+const deleteProduct = async (id, user) => {
   const product = await getProductById(id);
 
-  if (product.createdBy != userId)
-    throw { statusCode: 403, message: "Access denied" };
+  if (product.createdBy != user._id || !user.roles.includes(ADMIN)) {
+    throw {
+      statusCode: 403,
+      message: "Access denied",
+    };
+  }
 
   await Product.findByIdAndDelete(id);
 };

@@ -3,6 +3,7 @@ import { createJWT, verifyJWT } from "../utils/jwt.js";
 
 const login = async (req, res) => {
   const input = req.body;
+
   try {
     if (!input) {
       return res.status(400).send("Required fields are missing");
@@ -19,7 +20,9 @@ const login = async (req, res) => {
     const data = await authService.login(input);
 
     const authToken = createJWT(data);
+
     res.cookie("authToken", authToken, { maxAge: 86400 * 1000 });
+
     res.status(201).json(data);
   } catch (error) {
     res.status(error.statusCode || 500).send(error.message);
@@ -28,6 +31,7 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   const input = req.body;
+
   try {
     if (!input) {
       return res.status(400).send("Required fields are missing");
@@ -56,6 +60,7 @@ const register = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   const input = req.body;
+
   try {
     if (!input) {
       return res.status(400).send("Email address is required");
@@ -101,4 +106,14 @@ const resetPassword = async (req, res) => {
   }
 };
 
-export default { register, login, forgotPassword, resetPassword };
+const logout = async (req, res) => {
+  try {
+    await res.clearCookie("authToken");
+
+    res.json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+
+export default { register, login, forgotPassword, resetPassword, logout };

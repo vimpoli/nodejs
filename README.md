@@ -326,10 +326,13 @@ root/
 - Routes: kebab-case with lowercase texts
 - Add lines above and below if/else, loop function call
 
-# Debugging
+## Debugging
 
 - Process of finding errors
 
-## Steps to debug
+### Steps to debug
 
 1. Check the root app.js file
+2. Check the routes : routes, spelling 
+3. Check the controllers: spelling, params and args
+4. Check the service: spelling, params and args
