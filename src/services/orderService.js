@@ -147,13 +147,23 @@ const confirmOrderPayment = async (id, status, user) => {
   );
 };
 
+const getOrdersOfMerchant = async () => {
+  const orders = await Order.find()
+    .populate("orderItems.product")
+    .populate("user", ["name", "email", "address", "phone"])
+    .populate("payment");
+
+  return orders;
+};
+
 export default {
-  getOrders,
-  createOrder,
-  getOrderById,
-  getOrdersbyUser,
-  updateOrder,
-  deleteOrder,
-  orderPaymentViaKhalti,
   confirmOrderPayment,
+  createOrder,
+  deleteOrder,
+  getOrderById,
+  getOrders,
+  getOrdersbyUser,
+  getOrdersOfMerchant,
+  orderPaymentViaKhalti,
+  updateOrder,
 };

@@ -333,6 +333,17 @@ root/
 ### Steps to debug
 
 1. Check the root app.js file
-2. Check the routes : routes, spelling 
+2. Check the routes : routes, spelling
 3. Check the controllers: spelling, params and args
 4. Check the service: spelling, params and args
+
+# AI Integration
+
+- Gemini
+
+# Multi Vendor
+
+- Every merchant should be able to fetch
+  a. list of products created by them
+  b. orders made on their product
+- They should be able to update/delete their product

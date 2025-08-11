@@ -10,6 +10,7 @@ router.get("/", roleBasedAuth(ADMIN), userController.getUsers);
 router.get("/:id", roleBasedAuth(ADMIN), userController.getUserById);
 router.put("/:id", userController.updateUser);
 router.patch("/:id/profile-image", userController.updateProfilemage);
+router.post("/merchant", roleBasedAuth(ADMIN), userController.createMerchant);
 router.delete("/:id", roleBasedAuth(ADMIN), userController.deleteUser);
 
 export default router;

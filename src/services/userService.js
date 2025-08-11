@@ -1,4 +1,4 @@
-import { ADMIN } from "../constants/roles.js";
+import { ADMIN, MERCHANT, USER } from "../constants/roles.js";
 import User from "../models/User.js";
 import uploadFile from "../utils/file.js";
 
@@ -65,6 +65,18 @@ const updateProfilemage = async (id, file, authUser) => {
   return updatedUser;
 };
 
+const createMerchant = async (id) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    id,
+    {
+      roles: [USER, MERCHANT],
+    },
+    { new: true }
+  );
+
+  return updatedUser;
+};
+
 const deleteUser = async (id) => await User.findByIdAndDelete(id);
 
 export default {
@@ -74,4 +86,5 @@ export default {
   updateUser,
   deleteUser,
   updateProfilemage,
+  createMerchant,
 };
