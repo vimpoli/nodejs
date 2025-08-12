@@ -3,7 +3,7 @@ dotenv.config();
 
 const config = {
   appUrl: process.env.APP_URL || "",
-  mongoDBUrl: process.env.MONGODB_URL_PRODUCTION || "",
+  mongoDBUrl: process.env.MONGODB_URL || "",
   name: process.env.NAME || "",
   port: process.env.PORT || 5000,
   version: process.env.VERSION || "0.0.1",
