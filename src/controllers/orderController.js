@@ -3,11 +3,11 @@ import orderService from "../services/orderService.js";
 const createOrder = async (req, res) => {
   const input = req.body;
 
-  if (!input.orderItems || !input.orderItems.length) {
-    return res.status(400).send("Order items are required");
-  }
-
   try {
+    if (!input.orderItems || !input.orderItems.length) {
+      return res.status(400).send("Order items are required");
+    }
+
     const data = await orderService.createOrder(req.body, req.user);
 
     res.status(201).json(data);
@@ -27,9 +27,8 @@ const getOrders = async (req, res) => {
 };
 
 const getOrderById = async (req, res) => {
-  const id = req.params.id;
   try {
-    const data = await orderService.getOrderById(id);
+    const data = await orderService.getOrderById(req.params.id);
 
     res.status(200).json(data);
   } catch (error) {

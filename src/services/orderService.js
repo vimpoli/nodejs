@@ -70,10 +70,10 @@ const updateOrder = async (id, data, authUser) => {
   }
 };
 
-const deleteOrder = async (id, user) => {
+const deleteOrder = async (id, authUser) => {
   const order = await getOrderById(id);
 
-  if (order.user != user._id && !user.roles.includes(ADMIN)) {
+  if (order.user != authUser._id && !authUser.roles.includes(ADMIN)) {
     throw {
       statusCode: 403,
       message: "Access denied",
@@ -83,10 +83,10 @@ const deleteOrder = async (id, user) => {
   return await Order.findByIdAndDelete(id);
 };
 
-const orderPaymentViaKhalti = async (id, user) => {
+const orderPaymentViaKhalti = async (id, authUser) => {
   const order = await getOrderById(id);
 
-  if (order.user != user._id) {
+  if (order.user._id != authUser._id) {
     throw {
       statusCode: 403,
       message: "Access denied",
@@ -147,13 +147,54 @@ const confirmOrderPayment = async (id, status, user) => {
   );
 };
 
-const getOrdersOfMerchant = async () => {
-  const orders = await Order.find()
-    .populate("orderItems.product")
-    .populate("user", ["name", "email", "address", "phone"])
-    .populate("payment");
+const getOrdersOfMerchant = async (merchantId) => {
+  const orders = await Order.aggregate([
+    {
+      $lookup: {
+        from: "products",
+        localField: "orderItems.product",
+        foreignField: "_id",
+        as: "orderItems",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $unwind: "$user",
+    },
+    {
+      $project: {
+        "user.name": 1,
+        "user.email": 1,
+        "user.address": 1,
+        "user.phone": 1,
+        ordernumber: 1,
+        totalPrice: 1,
+        status: 1,
+        orderItems: 1,
+        shippingAddress: 1,
+        createdAt: 1,
+      },
+    },
+  ]);
 
-  return orders;
+  return orders
+    .map((order) => {
+      const filteredItems = order.orderItems.filter(
+        (item) => item && item.createdBy && item.createdBy == merchantId
+      );
+      return {
+        ...order,
+        orderItems: filteredItems,
+      };
+    })
+    .filter((order) => order.orderItems.length > 0);
 };
 
 export default {
