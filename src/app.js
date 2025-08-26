@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import multer from "multer";
+import cors from "cors";
 
 import config from "./config/config.js";
 import authRoutes from "./routes/authRoute.js";
@@ -18,6 +19,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 connectDB();
 connectCloudinary();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(logger);
 
