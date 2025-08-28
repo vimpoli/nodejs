@@ -23,7 +23,7 @@ const login = async (req, res) => {
 
     res.cookie("authToken", authToken, { maxAge: 86400 * 1000 });
 
-    res.status(201).json({ ...data, authToken });
+    res.status(201).json({ ...data, authToken, message: "Login successful" });
   } catch (error) {
     res.status(error.statusCode || 500).send(error.message);
   }
@@ -52,7 +52,9 @@ const register = async (req, res) => {
     const authToken = createJWT(data);
     res.cookie("authToken", authToken, { maxAge: 86400 * 1000 });
 
-    res.status(201).json({ ...data, authToken });
+    res
+      .status(201)
+      .json({ ...data, authToken, message: "User registration successful" });
   } catch (error) {
     res.status(error.statusCode || 500).send(error.message);
   }
