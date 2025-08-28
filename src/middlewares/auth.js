@@ -1,17 +1,24 @@
 import { verifyJWT } from "../utils/jwt.js";
 
 const auth = async (req, res, next) => {
-  const cookie = req.headers.cookie;
+  const authHeder = req.headers.authorization;
+  let authToken;
 
-  if (!cookie) return res.status(401).send("User not authenticated");
+  if (authHeder && authHeder.startsWith("Bearer")) {
+    authToken = authHeder.split(" ")[1];
+  } else {
+    const cookie = req.headers.cookie;
 
-  const authToken = cookie.split("=")[1];
+    if (!cookie) return res.status(401).send("User not authenticated");
+
+    authToken = cookie.split("=")[1];
+  }
 
   try {
     const data = await verifyJWT(authToken);
 
     req.user = data;
-    
+
     next();
   } catch (error) {
     res.status(401).send("Invalid token");
