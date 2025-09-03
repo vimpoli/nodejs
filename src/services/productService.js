@@ -43,7 +43,7 @@ const getProducts = async (query) => {
     .sort(sort)
     .limit(limit)
     .skip(offset);
-    
+
   return products;
 };
 
@@ -71,10 +71,11 @@ const updateProduct = async (id, data, files, user) => {
 
   const dataToUpdate = data;
 
-  if (files.length < 0) {
+  if (files && files.length > 0) {
     const uploadedFiles = await uploadFile(files);
     dataToUpdate.imageUrls = uploadedFiles.map((item) => item?.url);
   }
+  
   const updatedProduct = await Product.findByIdAndUpdate(id, dataToUpdate, {
     new: true,
   });
