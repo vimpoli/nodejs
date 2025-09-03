@@ -21,7 +21,6 @@ const productSchema = new mongoose.Schema({
   stock: {
     type: Number,
     default: 1,
-    select: false,
     max: [10000, "Stock must not exceed 10000."],
   },
   createdAt: {
