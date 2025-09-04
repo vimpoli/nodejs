@@ -75,7 +75,7 @@ const updateProduct = async (id, data, files, user) => {
     const uploadedFiles = await uploadFile(files);
     dataToUpdate.imageUrls = uploadedFiles.map((item) => item?.url);
   }
-  
+
   const updatedProduct = await Product.findByIdAndUpdate(id, dataToUpdate, {
     new: true,
   });
@@ -85,8 +85,8 @@ const updateProduct = async (id, data, files, user) => {
 
 const deleteProduct = async (id, user) => {
   const product = await getProductById(id);
-
-  if (product.createdBy != user._id || !user.roles.includes(ADMIN)) {
+ 
+  if (product.createdBy != user._id && !user.roles.includes(ADMIN)) {
     throw {
       statusCode: 403,
       message: "Access denied",
