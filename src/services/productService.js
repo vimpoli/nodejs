@@ -1,7 +1,7 @@
 import Product from "../models/Product.js";
+import promptGemini from "../utils/gemini.js";
 import uploadFile from "../utils/file.js";
 import { ADMIN } from "../constants/roles.js";
-import promptGemini from "../utils/gemini.js";
 import { PRODUCT_DESCRIPTION_PROMPT } from "../constants/prompt.js";
 
 const createProduct = async (data, files, createdBy) => {
@@ -23,7 +23,16 @@ const createProduct = async (data, files, createdBy) => {
 };
 
 const getProducts = async (query) => {
-  const { name, limit, offset, brands, category, min, max, createdBy } = query;
+  const {
+    brands,
+    category,
+    createdBy,
+    limit,
+    max,
+    min,
+    name,
+    offset,
+  } = query;
 
   const sort = JSON.parse(query.sort || "{}");
 
@@ -85,7 +94,7 @@ const updateProduct = async (id, data, files, user) => {
 
 const deleteProduct = async (id, user) => {
   const product = await getProductById(id);
- 
+
   if (product.createdBy != user._id && !user.roles.includes(ADMIN)) {
     throw {
       statusCode: 403,
