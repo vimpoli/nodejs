@@ -7,6 +7,7 @@ const createProduct = async (req, res) => {
       req.files,
       req.user._id
     );
+
     res.status(201).json(data);
   } catch (error) {
     res.status(error.statusCode || 500).send(error.message);
@@ -16,7 +17,28 @@ const createProduct = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const products = await productService.getProducts(req.query);
+
     res.json(products);
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+
+const getBrands = async (req, res) => {
+  try {
+    const brands = await productService.getBrands();
+
+    res.json(brands);
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+
+const getCategories = async (req, res) => {
+  try {
+    const categories = await productService.getCategories();
+
+    res.json(categories);
   } catch (error) {
     res.status(error.statusCode || 500).send(error.message);
   }
@@ -27,6 +49,7 @@ const getProductById = async (req, res) => {
 
   try {
     const product = await productService.getProductById(id);
+
     res.status(200).json(product);
   } catch (error) {
     res.status(error.statusCode || 500).send(error.message);
@@ -42,8 +65,9 @@ const updateProduct = async (req, res) => {
       id,
       req.body,
       req.files,
-      user,
+      user
     );
+
     res.status(201).json(updatedProduct);
   } catch (error) {
     res.status(error.statusCode || 500).send(error.message);
@@ -56,7 +80,7 @@ const deleteProduct = async (req, res) => {
 
   try {
     await productService.deleteProduct(id, user);
-    
+
     res.send(`Product deleted successfully with id: ${id}`);
   } catch (error) {
     res.status(error.statusCode || 500).send(error.message);
@@ -66,6 +90,8 @@ const deleteProduct = async (req, res) => {
 export default {
   getProducts,
   getProductById,
+  getBrands,
+  getCategories,
   createProduct,
   updateProduct,
   deleteProduct,

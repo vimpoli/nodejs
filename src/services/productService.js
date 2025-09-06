@@ -23,16 +23,7 @@ const createProduct = async (data, files, createdBy) => {
 };
 
 const getProducts = async (query) => {
-  const {
-    brands,
-    category,
-    createdBy,
-    limit,
-    max,
-    min,
-    name,
-    offset,
-  } = query;
+  const { brands, category, createdBy, limit, max, min, name, offset } = query;
 
   const sort = JSON.parse(query.sort || "{}");
 
@@ -105,9 +96,15 @@ const deleteProduct = async (id, user) => {
   await Product.findByIdAndDelete(id);
 };
 
+const getBrands = async () => await Product.distinct("brand");
+
+const getCategories = async () => await Product.distinct("category");
+
 export default {
   getProducts,
   getProductById,
+  getBrands,
+  getCategories,
   createProduct,
   updateProduct,
   deleteProduct,
