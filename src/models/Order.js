@@ -7,7 +7,7 @@ import {
 } from "../constants/orderStatuses.js";
 
 const orderSchema = new mongoose.Schema({
-  ordernumber: {
+  orderNumber: {
     type: String,
     required: [true, "Order number is required"],
   },

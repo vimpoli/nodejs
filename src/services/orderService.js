@@ -9,9 +9,9 @@ import Payment from "../models/Payment.js";
 import payment from "../utils/payment.js";
 
 const createOrder = async (data, userId) => {
-  const ordernumber = crypto.randomUUID();
+  const orderNumber = crypto.randomUUID();
 
-  return await Order.create({ ...data, user: userId, ordernumber });
+  return await Order.create({ ...data, user: userId, orderNumber });
 };
 
 const getOrders = async () => {
