@@ -1,4 +1,7 @@
-import { ORDER_STATUS_CONFIRMED } from "../constants/orderStatuses.js";
+import {
+  ORDER_STATUS_CONFIRMED,
+  ORDER_STATUS_PENDING,
+} from "../constants/orderStatuses.js";
 import {
   PAYMENT_STATUS_COMPLETED,
   PAYMENT_STATUS_FAILED,
@@ -24,6 +27,7 @@ const getOrders = async () => {
 
 const getOrderById = async (id) => {
   const order = await Order.findById(id)
+    .sort({ createdAt: -1 })
     .populate("orderItems.product")
     .populate("user", ["name", "email", "address", "phone"])
     .populate("payment");
@@ -38,8 +42,11 @@ const getOrderById = async (id) => {
   return order;
 };
 
-const getOrdersbyUser = async (userId) => {
-  const orders = await Order.find({ user: userId })
+const getOrdersbyUser = async (query, userId) => {
+  const orders = await Order.find({
+    status: query?.status || ORDER_STATUS_PENDING,
+    user: userId,
+  })
     .populate("orderItems.product")
     .populate("user", ["name", "email", "address", "phone"])
     .populate("payment");
