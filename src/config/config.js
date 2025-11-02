@@ -16,7 +16,9 @@ const config = {
   khalti: {
     apiKey: process.env.KHALTI_API_KEY || "",
     apiUrl: process.env.KHALTI_API_URL || "",
-    returnURL: process.env.KHALTI_RETURN_URL || "",
+  },
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY || "",
   },
   gemini: {
     url: process.env.GEMINI_URL || "",

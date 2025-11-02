@@ -83,6 +83,19 @@ const orderPaymentViaKhalti = async (req, res) => {
   }
 };
 
+const orderPaymentViaStripe = async (req, res) => {
+  try {
+    const data = await orderService.orderPaymentViaStripe(
+      req.params.id,
+      req.user
+    );
+
+    res.status(201).json(data);
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+
 const confirmOrderPayment = async (req, res) => {
   try {
     const data = await orderService.confirmOrderPayment(
@@ -116,5 +129,6 @@ export default {
   getOrdersbyUser,
   getOrdersOfMerchant,
   orderPaymentViaKhalti,
+  orderPaymentViaStripe,
   updateOrder,
 };

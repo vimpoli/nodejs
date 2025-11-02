@@ -13,7 +13,7 @@ const paymentSchema = new mongoose.Schema({
   method: {
     type: String,
     required: [true, "Payment method is required"],
-    enum: ["cash", "Card", "online"],
+    enum: ["cash", "card", "online"],
   },
   status: {
     type: String,

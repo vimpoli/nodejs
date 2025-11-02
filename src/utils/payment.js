@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../config/config.js";
+import Stripe from "stripe";
 
 const payViaKhalti = async (data) => {
   if (!data) throw { message: "Payment data is required" };
@@ -15,7 +16,7 @@ const payViaKhalti = async (data) => {
     amount: data.amount,
     purchase_order_id: data.purchaseOrderId,
     purchase_order_name: data.purchaseOrderName,
-    return_url: config.khalti.returnURL,
+    return_url: `${config.appUrl}/orders/${data.purchaseOrderId}/payment/khalti`,
     website_url: config.appUrl,
     customer_info: {
       name: data.customer.name,
@@ -34,4 +35,20 @@ const payViaKhalti = async (data) => {
   return response.data;
 };
 
-export default { payViaKhalti };
+async function payViaStripe(data) {
+  const stripe = new Stripe(config.stripe.secretKey);
+
+  return await stripe.paymentIntents.create({
+    amount: data.amount,
+    currency: data.currency || "npr",
+    metadata: {
+      customer_name: data.customer.name,
+      customer_email: data.customer.email,
+      customer_phone: data.customer.phone,
+      order_id: data.orderId,
+      order_name: data.orderName,
+    },
+  });
+}
+
+export default { payViaKhalti, payViaStripe };
