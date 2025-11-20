@@ -10,13 +10,13 @@ const payViaKhalti = async (data) => {
   if (!data.purchaseOrderId) throw { message: "Purchase Order ID is required" };
 
   if (!data.purchaseOrderName)
-    throw { message: "Purchase Order name is required" };
+    throw { message: "Purchase order name is required" };
 
   const body = {
     amount: data.amount,
     purchase_order_id: data.purchaseOrderId,
     purchase_order_name: data.purchaseOrderName,
-    return_url: `${config.appUrl}/orders/${data.purchaseOrderId}/payment/khalti`,
+    return_url: `${config.appUrl}/api/orders/${data.purchaseOrderId}/payment/khalti`,
     website_url: config.appUrl,
     customer_info: {
       name: data.customer.name,
