@@ -44,6 +44,25 @@ const updateUser = async (id, data, authUser) => {
   return updatedUser;
 };
 
+const updateUserRoles = async (id, data, authUser) => {
+  if (!authUser.roles.includes(ADMIN)) {
+    throw {
+      statusCode: 403,
+      message: "Access denied",
+    };
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    id,
+    {
+      roles: data.roles,
+    },
+    { new: true }
+  );
+
+  return updatedUser;
+};
+
 const updateProfilemage = async (id, file, authUser) => {
   const user = await User.findById(id);
 
@@ -86,5 +105,6 @@ export default {
   updateUser,
   deleteUser,
   updateProfilemage,
+  updateUserRoles,
   createMerchant,
 };
