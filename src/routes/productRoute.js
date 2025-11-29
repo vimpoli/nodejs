@@ -15,6 +15,8 @@ router.post(
 
 router.get("/", productController.getProducts);
 
+router.get("/count", productController.getCount);
+
 router.get("/brands", productController.getBrands);
 
 router.get("/categories", productController.getCategories);

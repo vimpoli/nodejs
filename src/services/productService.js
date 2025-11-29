@@ -96,6 +96,8 @@ const deleteProduct = async (id, user) => {
   await Product.findByIdAndDelete(id);
 };
 
+const getCount = async () => await Product.countDocuments();
+
 const getBrands = async () => await Product.distinct("brand");
 
 const getCategories = async () => await Product.distinct("category");
@@ -104,6 +106,7 @@ export default {
   getProducts,
   getProductById,
   getBrands,
+  getCount,
   getCategories,
   createProduct,
   updateProduct,

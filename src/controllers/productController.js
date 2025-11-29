@@ -34,6 +34,16 @@ const getBrands = async (req, res) => {
   }
 };
 
+const getCount = async (req, res) => {
+  try {
+    const count = await productService.getCount();
+
+    res.send(count);
+  } catch (error) {
+    res.status(error.statusCode || 500).send(error.message);
+  }
+};
+
 const getCategories = async (req, res) => {
   try {
     const categories = await productService.getCategories();
@@ -91,6 +101,7 @@ export default {
   getProducts,
   getProductById,
   getBrands,
+  getCount,
   getCategories,
   createProduct,
   updateProduct,
