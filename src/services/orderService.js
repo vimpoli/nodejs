@@ -18,9 +18,41 @@ const createOrder = async (data, userId) => {
 };
 
 const getOrders = async () => {
-  const orders = await Order.find()
-    .populate("orderItems.product")
-    .populate("user", ["name", "email", "address", "phone"]);
+  const orders = await Order.aggregate([
+    {
+      $lookup: {
+        from: "products",
+        localField: "orderItems.product",
+        foreignField: "_id",
+        as: "orderItems",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $unwind: "$user",
+    },
+    {
+      $project: {
+        "user.name": 1,
+        "user.email": 1,
+        "user.address": 1,
+        "user.phone": 1,
+        orderNumber: 1,
+        totalPrice: 1,
+        status: 1,
+        orderItems: 1,
+        shippingAddress: 1,
+        createdAt: 1,
+      },
+    },
+  ]);
 
   return orders;
 };
@@ -43,10 +75,11 @@ const getOrderById = async (id) => {
 };
 
 const getOrdersbyUser = async (query, userId) => {
-  const orders = await Order.find({
-    status: query?.status || ORDER_STATUS_PENDING,
-    user: userId,
-  })
+  const queryParams = {};
+  queryParams.user = userId;
+
+  if (query.status) queryParams.status = query.status;
+  const orders = await Order.find(queryParams)
     .populate("orderItems.product")
     .populate("user", ["name", "email", "address", "phone"])
     .populate("payment");
@@ -211,7 +244,7 @@ const getOrdersOfMerchant = async (merchantId) => {
         "user.email": 1,
         "user.address": 1,
         "user.phone": 1,
-        ordernumber: 1,
+        orderNumber: 1,
         totalPrice: 1,
         status: 1,
         orderItems: 1,

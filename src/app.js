@@ -19,10 +19,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 connectDB();
 connectCloudinary();
 
-app.use(cors({
-  origin: "https://frontend-phi-six-59.vercel.app",
-  credentials: true
-}));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(logger);
 
